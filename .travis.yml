@@ -1,10 +1,13 @@
 language: scala
 scala:
-    - 2.11.7
+    - 2.12.2
 jdk:
     - oraclejdk8
-addons:
-    apt:
-        packages:
-            - oracle-java8-installer
-
+script:
+  - sbt clean coverage test coverageReport coverageAggregate
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+cache:
+  directories:
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.sbt/boot/"
